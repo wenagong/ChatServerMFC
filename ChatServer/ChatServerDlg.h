@@ -3,7 +3,9 @@
 //
 
 #pragma once
+#include"CListenSocket.h"
 
+//class CListenSocket; //类的前置声明，或者包含头文件
 
 // CChatServerDlg 对话框
 class CChatServerDlg : public CDialogEx
@@ -30,4 +32,9 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 	DECLARE_MESSAGE_MAP()
+public:
+	CListCtrl m_list;
+	CListenSocket *m_pListenSocket;
+	afx_msg void OnBnClickedStart();
+	afx_msg void OnBnClickedClose();
 };

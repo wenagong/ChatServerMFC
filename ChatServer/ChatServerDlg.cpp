@@ -20,16 +20,20 @@ CChatServerDlg::CChatServerDlg(CWnd* pParent /*=nullptr*/)
 	: CDialogEx(IDD_CHATSERVER_DIALOG, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+	m_pListenSocket = NULL; //初始化
 }
 
 void CChatServerDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	DDX_Control(pDX, IDC_LIST1, m_list);
 }
 
 BEGIN_MESSAGE_MAP(CChatServerDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(BTM_START, &CChatServerDlg::OnBnClickedStart)
+	ON_BN_CLICKED(BTM_CLOSE, &CChatServerDlg::OnBnClickedClose)
 END_MESSAGE_MAP()
 
 
@@ -44,7 +48,11 @@ BOOL CChatServerDlg::OnInitDialog()
 	SetIcon(m_hIcon, TRUE);			// 设置大图标
 	SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-	// TODO: 在此添加额外的初始化代码
+	m_list.InsertColumn(0, _T("昵称"), LVCFMT_LEFT, 100);
+	m_list.InsertColumn(1, _T("IP地址"), LVCFMT_CENTER, 200);
+	m_list.InsertColumn(2, _T("端口号"), LVCFMT_LEFT, 100);
+
+	m_list.SetExtendedStyle(LVS_EX_GRIDLINES);
 
 	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -85,3 +93,53 @@ HCURSOR CChatServerDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+//点击开启服务器模块
+void CChatServerDlg::OnBnClickedStart()
+{
+	m_pListenSocket = new CListenSocket; 
+
+	//创建套接字
+	//Create()
+	//1.端口号：0->65535，1024以下一般为系统应用，一般取1024以上
+	//2.套接字类型：TCP(SOCK_STREAM)/UDP(SOCEK_DGREAM)
+	if (FALSE==m_pListenSocket->Create(6080, SOCK_STREAM)) 
+	{
+		CString str;
+		str.Format(_T("创建套接字失败.错误代码：%d"), GetLastError());
+		MessageBox(str);
+		delete m_pListenSocket;
+		m_pListenSocket = NULL;
+		return;
+	}
+
+	//将套接字设置为监听模式
+	if (FALSE==m_pListenSocket->Listen()) 
+	{
+		CString str;
+		str.Format(_T("监听失败.错误代码：%d"), GetLastError());
+		MessageBox(str);
+		delete m_pListenSocket;
+		m_pListenSocket = NULL;
+		return;
+	}
+
+	//调整按钮的状态
+	GetDlgItem(BTM_START)->EnableWindow(FALSE);
+	GetDlgItem(BTM_CLOSE)->EnableWindow(TRUE);
+
+}
+
+//关闭服务器模块
+void CChatServerDlg::OnBnClickedClose()
+{
+	if (m_pListenSocket) {
+		m_pListenSocket->Close();
+		delete m_pListenSocket;
+		m_pListenSocket = NULL;
+
+		//调整按钮的状态
+		GetDlgItem(BTM_START)->EnableWindow(TRUE);
+		GetDlgItem(BTM_CLOSE)->EnableWindow(FALSE);
+	}
+}
