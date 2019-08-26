@@ -45,6 +45,5 @@ void CClientSocket::OnReceive(int nErrorCode)
 	case SEND:
 		break;
 	}
-
 	CSocket::OnReceive(nErrorCode);
 }
