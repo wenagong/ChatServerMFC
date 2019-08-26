@@ -4,6 +4,7 @@
 
 #pragma once
 #include"CListenSocket.h"
+#include"resource.h"
 
 //class CListenSocket; //类的前置声明，或者包含头文件
 
@@ -37,4 +38,5 @@ public:
 	CListenSocket *m_pListenSocket;
 	afx_msg void OnBnClickedStart();
 	afx_msg void OnBnClickedClose();
+	void OnAccept();
 };

@@ -37,6 +37,13 @@
 #include <afxsock.h>            // MFC 套接字扩展
 
 
+enum { LOGIN = 1024, SEND };
+
+typedef struct _Command {
+	int cmd;          //命令
+	int nDataSize; //数据大小
+}Command;
+
 
 
 

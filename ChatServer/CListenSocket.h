@@ -6,5 +6,6 @@ class CListenSocket :
 public:
 	CListenSocket();
 	~CListenSocket();
+	virtual void OnAccept(int nErrorCode);
 };
 

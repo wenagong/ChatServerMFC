@@ -179,6 +179,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CClientSocket.h" />
     <ClInclude Include="ChatServer.h" />
     <ClInclude Include="ChatServerDlg.h" />
     <ClInclude Include="CListenSocket.h" />
@@ -187,6 +188,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CClientSocket.cpp" />
     <ClCompile Include="ChatServer.cpp" />
     <ClCompile Include="ChatServerDlg.cpp" />
     <ClCompile Include="CListenSocket.cpp" />

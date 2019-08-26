@@ -33,6 +33,9 @@
     <ClInclude Include="CListenSocket.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="CClientSocket.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChatServer.cpp">
@@ -45,6 +48,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="CListenSocket.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CClientSocket.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

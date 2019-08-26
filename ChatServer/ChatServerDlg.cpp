@@ -6,7 +6,7 @@
 #include "ChatServer.h"
 #include "ChatServerDlg.h"
 #include "afxdialogex.h"
-
+#include"CClientSocket.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -142,4 +142,12 @@ void CChatServerDlg::OnBnClickedClose()
 		GetDlgItem(BTM_START)->EnableWindow(TRUE);
 		GetDlgItem(BTM_CLOSE)->EnableWindow(FALSE);
 	}
+}
+
+void CChatServerDlg::OnAccept()
+{
+	CClientSocket* pSocket =  new CClientSocket;
+	m_pListenSocket->Accept(*pSocket);
+
+	//接收
 }
